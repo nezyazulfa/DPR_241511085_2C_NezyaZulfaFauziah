@@ -66,4 +66,43 @@ class AnggotaController extends ResourceController
             return redirect()->back();
         }
     }
+    public function edit($id = null)
+    {
+        // Cari data anggota berdasarkan ID
+        $anggota = $this->model->find($id);
+
+        if ($anggota) {
+            $data = [
+                'anggota' => $anggota
+            ];
+            // Ubah format ke html agar bisa di-render
+            $this->format = 'html';
+            return view('admin/anggota/edit', $data);
+        } else {
+            session()->setFlashdata('error', 'Data anggota tidak ditemukan.');
+            return redirect()->to('/admin/anggota');
+        }
+    }
+
+    public function update($id = null)
+    {
+        $data = [
+            'gelar_depan' => $this->request->getPost('gelar_depan'),
+            'nama_depan' => $this->request->getPost('nama_depan'),
+            'nama_belakang' => $this->request->getPost('nama_belakang'),
+            'gelar_belakang' => $this->request->getPost('gelar_belakang'),
+            'jabatan' => $this->request->getPost('jabatan'),
+            'status_pernikahan' => $this->request->getPost('status_pernikahan'),
+            'jumlah_anak' => $this->request->getPost('jumlah_anak'),
+        ];
+
+        // Menggunakan model untuk mengupdate data
+        if ($this->model->update($id, $data)) {
+            session()->setFlashdata('success', 'Data anggota berhasil diperbarui.');
+            return redirect()->to('/admin/anggota');
+        } else {
+            session()->setFlashdata('error', 'Gagal memperbarui data anggota.');
+            return redirect()->back();
+        }
+    }
 }

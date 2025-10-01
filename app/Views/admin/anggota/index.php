@@ -36,7 +36,7 @@
                     <td><?= esc($item['jumlah_anak']) ?></td>
                     <td>
                         <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                        <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                        <a href="<?= site_url('admin/anggota/' . $item['id_anggota'] . '/edit') ?>" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                         <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
