@@ -37,7 +37,13 @@
                     <td>
                         <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                         <a href="<?= site_url('admin/anggota/' . $item['id_anggota'] . '/edit') ?>" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        <form action="<?= site_url('admin/anggota/' . $item['id_anggota']) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -105,4 +105,14 @@ class AnggotaController extends ResourceController
             return redirect()->back();
         }
     }
+    public function delete($id = null)
+    {
+        // Menggunakan model untuk menghapus data
+        if ($this->model->delete($id)) {
+            session()->setFlashdata('success', 'Data anggota berhasil dihapus.');
+        } else {
+            session()->setFlashdata('error', 'Gagal menghapus data anggota.');
+        }
+        return redirect()->to('/admin/anggota');
+    }
 }
