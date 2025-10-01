@@ -9,7 +9,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <a href="#" class="btn btn-primary mb-3">
+    <a href="<?= site_url('admin/anggota/new') ?>" class="btn btn-primary mb-3">
         <i class="fa fa-plus"></i> Tambah Data
     </a>
     <div class="table-responsive">
@@ -27,13 +27,13 @@
             <tbody>
                 <?php foreach($anggota as $item): ?>
                 <tr>
-                    <td><?= $item['id_anggota'] ?></td>
+                    <td><?= esc($item['id_anggota']) ?></td>
                     <td>
-                        <?= $item['gelar_depan'] . ' ' . $item['nama_depan'] . ' ' . $item['nama_belakang'] . ' ' . $item['gelar_belakang'] ?>
+                        <?= esc(trim($item['gelar_depan'] . ' ' . $item['nama_depan'] . ' ' . $item['nama_belakang'] . ' ' . $item['gelar_belakang'])) ?>
                     </td>
-                    <td><?= $item['jabatan'] ?></td>
-                    <td><?= $item['status_pernikahan'] ?></td>
-                    <td><?= $item['jumlah_anak'] ?></td>
+                    <td><?= esc($item['jabatan']) ?></td>
+                    <td><?= esc($item['status_pernikahan']) ?></td>
+                    <td><?= esc($item['jumlah_anak']) ?></td>
                     <td>
                         <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                         <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
