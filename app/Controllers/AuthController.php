@@ -20,7 +20,7 @@ class AuthController extends BaseController
 
     public function processLogin()
     {
-        $userModel = new UserModel();
+        $userModel = new \App\Models\UserModel();
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
