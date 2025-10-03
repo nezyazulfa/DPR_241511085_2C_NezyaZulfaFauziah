@@ -55,4 +55,45 @@ class KomponenGajiController extends ResourceController
             return redirect()->back();
         }
     }
+
+    public function edit($id = null)
+    {
+        $data = [
+            'komponen' => $this->model->find($id)
+        ];
+        if (!$data['komponen']) {
+            session()->setFlashdata('error', 'Data komponen gaji tidak ditemukan.');
+            return redirect()->to('/admin/komponen-gaji');
+        }
+        return view('admin/komponen_gaji/edit', $data);
+    }
+
+    public function update($id = null)
+    {
+        $data = [
+            'nama_komponen' => $this->request->getPost('nama_komponen'),
+            'kategori'      => $this->request->getPost('kategori'),
+            'jabatan'       => $this->request->getPost('jabatan'),
+            'nominal'       => $this->request->getPost('nominal'),
+            'satuan'        => $this->request->getPost('satuan'),
+        ];
+
+        if ($this->model->update($id, $data)) {
+            session()->setFlashdata('success', 'Data komponen gaji berhasil diperbarui.');
+            return redirect()->to('/admin/komponen-gaji');
+        } else {
+            session()->setFlashdata('error', 'Gagal memperbarui data komponen gaji.');
+            return redirect()->back();
+        }
+    }
+
+    public function delete($id = null)
+    {
+        if ($this->model->delete($id)) {
+            session()->setFlashdata('success', 'Data komponen gaji berhasil dihapus.');
+        } else {
+            session()->setFlashdata('error', 'Gagal menghapus data komponen gaji.');
+        }
+        return redirect()->to('/admin/komponen-gaji');
+    }
 }

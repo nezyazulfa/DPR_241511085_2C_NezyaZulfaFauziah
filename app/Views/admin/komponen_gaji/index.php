@@ -33,8 +33,14 @@
                     <td><?= esc($item['jabatan']) ?></td>
                     <td>Rp <?= number_format($item['nominal'], 0, ',', '.') ?></td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="<?= site_url('admin/komponen-gaji/' . $item['id_komponen'] . '/edit') ?>" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                        <form action="<?= site_url('admin/komponen-gaji/' . $item['id_komponen']) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach; ?>
