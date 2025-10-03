@@ -9,7 +9,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <a href="#" class="btn btn-primary mb-3">
+    <a href="<?= site_url('admin/komponen-gaji/new') ?>" class="btn btn-primary mb-3">
         <i class="fa fa-plus"></i> Tambah Data
     </a>
     <div class="table-responsive">
