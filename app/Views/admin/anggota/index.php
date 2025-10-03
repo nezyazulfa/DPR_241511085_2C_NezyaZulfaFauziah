@@ -35,7 +35,7 @@
                     <td><?= esc($item['status_pernikahan']) ?></td>
                     <td><?= esc($item['jumlah_anak']) ?></td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="<?= site_url('admin/anggota/' . $item['id_anggota']) ?>" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                         <a href="<?= site_url('admin/anggota/' . $item['id_anggota'] . '/edit') ?>" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                         <form action="<?= site_url('admin/anggota/' . $item['id_anggota']) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                             <input type="hidden" name="_method" value="DELETE">

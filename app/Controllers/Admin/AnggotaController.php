@@ -66,6 +66,23 @@ class AnggotaController extends ResourceController
             return redirect()->back();
         }
     }
+
+    public function show($id = null)
+    {
+        // Cari data anggota berdasarkan ID
+        $anggota = $this->model->find($id);
+
+        if ($anggota) {
+            $data = [
+                'anggota' => $anggota
+            ];
+            $this->format = 'html';
+            return view('admin/anggota/show', $data);
+        } else {
+            session()->setFlashdata('error', 'Data anggota tidak ditemukan.');
+            return redirect()->to('/admin/anggota');
+        }
+    }
     public function edit($id = null)
     {
         // Cari data anggota berdasarkan ID
