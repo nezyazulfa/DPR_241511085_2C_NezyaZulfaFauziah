@@ -24,6 +24,9 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
     // Rute 'resource' untuk Anggota.
     $routes->resource('anggota', ['controller' => 'Admin\AnggotaController']);
 
-    // BARIS BARU: Rute 'resource' untuk Komponen Gaji
+    // Rute 'resource' untuk Komponen Gaji
     $routes->resource('komponen-gaji', ['controller' => 'Admin\KomponenGajiController']);
+
+    // BARIS YANG HILANG: Rute 'resource' untuk Penggajian
+    $routes->resource('penggajian', ['controller' => 'Admin\PenggajianController']);
 });

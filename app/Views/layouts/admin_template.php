@@ -32,7 +32,7 @@
                 <a href="<?= site_url('admin/dashboard') ?>" class="list-group-item list-group-item-action">Dashboard</a>
                 <a href="<?= site_url('admin/anggota') ?>" class="list-group-item list-group-item-action">Data Anggota DPR</a>
                 <a href="<?= site_url('admin/komponen-gaji') ?>" class="list-group-item list-group-item-action">Data Komponen Gaji</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">Data Penggajian</a>
+                <a href="<?= site_url('admin/penggajian') ?>" class="list-group-item list-group-item-action">Data Penggajian</a>
             </div>
         </div>
         <div class="col-md-9">
