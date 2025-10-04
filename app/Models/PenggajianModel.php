@@ -14,6 +14,7 @@ class PenggajianModel extends Model
     {
         return $this->select('penggajian.*, anggota.nama_depan, anggota.nama_belakang, anggota.jabatan')
                     ->join('anggota', 'anggota.id_anggota = penggajian.id_anggota')
+                    ->orderBy('penggajian.tanggal_penggajian', 'DESC')
                     ->findAll();
     }
 }

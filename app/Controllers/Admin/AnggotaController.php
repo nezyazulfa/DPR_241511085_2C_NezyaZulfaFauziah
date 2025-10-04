@@ -3,133 +3,88 @@
 namespace App\Controllers\Admin;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\AnggotaModel;
+
+/**
+ * @property \CodeIgniter\HTTP\IncomingRequest $request
+ */
 
 class AnggotaController extends ResourceController
 {
     protected $modelName = 'App\Models\AnggotaModel';
-    protected $format    = 'json';
+    protected $format    = 'html';
 
-    /**
-     * Return an array of resource objects, themselves in array format
-     *
-     * @return mixed
-     */
     public function index()
     {
-        $data = [
-            'anggota' => $this->model->findAll()
-        ];
-        // Ubah format ke html agar bisa di-render
-        $this->format = 'html';
+        $data = ['anggota' => $this->model->findAll()];
         return view('admin/anggota/index', $data);
-    }
-
-    /**
-     * Return a new resource object, with default properties
-     *
-     * @return mixed
-     */
-    public function new()
-    {
-        // Ubah format ke html agar bisa di-render
-        $this->format = 'html';
-        return view('admin/anggota/new');
-    }
-
-    /**
-     * Create a new resource object, from "posted" parameters
-     *
-     * @return mixed
-     */
-    public function create()
-    {
-        $data = [
-            'id_anggota' => $this->request->getPost('id_anggota'),
-            'gelar_depan' => $this->request->getPost('gelar_depan'),
-            'nama_depan' => $this->request->getPost('nama_depan'),
-            'nama_belakang' => $this->request->getPost('nama_belakang'),
-            'gelar_belakang' => $this->request->getPost('gelar_belakang'),
-            'jabatan' => $this->request->getPost('jabatan'),
-            'status_pernikahan' => $this->request->getPost('status_pernikahan'),
-            'jumlah_anak' => $this->request->getPost('jumlah_anak'),
-        ];
-
-        // Menggunakan model untuk menyimpan data
-        if ($this->model->insert($data)) {
-            // Jika berhasil, set pesan sukses dan redirect
-            session()->setFlashdata('success', 'Data anggota berhasil ditambahkan.');
-            return redirect()->to('/admin/anggota');
-        } else {
-            // Jika gagal, set pesan error dan redirect kembali
-            session()->setFlashdata('error', 'Gagal menambahkan data anggota.');
-            return redirect()->back();
-        }
     }
 
     public function show($id = null)
     {
-        // Cari data anggota berdasarkan ID
         $anggota = $this->model->find($id);
-
-        if ($anggota) {
-            $data = [
-                'anggota' => $anggota
-            ];
-            $this->format = 'html';
-            return view('admin/anggota/show', $data);
-        } else {
+        if (!$anggota) {
             session()->setFlashdata('error', 'Data anggota tidak ditemukan.');
             return redirect()->to('/admin/anggota');
         }
+        $data = ['anggota' => $anggota];
+        return view('admin/anggota/show', $data);
     }
+    
+    public function new()
+    {
+        return view('admin/anggota/new');
+    }
+
+    public function create()
+    {
+        $data = [
+            'id_anggota'        => $this->request->getVar('id_anggota'),
+            'gelar_depan'       => $this->request->getVar('gelar_depan'),
+            'nama_depan'        => $this->request->getVar('nama_depan'),
+            'nama_belakang'     => $this->request->getVar('nama_belakang'),
+            'gelar_belakang'    => $this->request->getVar('gelar_belakang'),
+            'jabatan'           => $this->request->getVar('jabatan'),
+            'status_pernikahan' => $this->request->getVar('status_pernikahan'),
+            'jumlah_anak'       => $this->request->getVar('jumlah_anak'),
+        ];
+
+        $this->model->insert($data);
+        session()->setFlashdata('success', 'Data anggota berhasil ditambahkan.');
+        return redirect()->to('/admin/anggota');
+    }
+
     public function edit($id = null)
     {
-        // Cari data anggota berdasarkan ID
         $anggota = $this->model->find($id);
-
-        if ($anggota) {
-            $data = [
-                'anggota' => $anggota
-            ];
-            // Ubah format ke html agar bisa di-render
-            $this->format = 'html';
-            return view('admin/anggota/edit', $data);
-        } else {
+        if (!$anggota) {
             session()->setFlashdata('error', 'Data anggota tidak ditemukan.');
             return redirect()->to('/admin/anggota');
         }
+        $data = ['anggota' => $anggota];
+        return view('admin/anggota/edit', $data);
     }
 
     public function update($id = null)
     {
         $data = [
-            'gelar_depan' => $this->request->getPost('gelar_depan'),
-            'nama_depan' => $this->request->getPost('nama_depan'),
-            'nama_belakang' => $this->request->getPost('nama_belakang'),
-            'gelar_belakang' => $this->request->getPost('gelar_belakang'),
-            'jabatan' => $this->request->getPost('jabatan'),
-            'status_pernikahan' => $this->request->getPost('status_pernikahan'),
-            'jumlah_anak' => $this->request->getPost('jumlah_anak'),
+            'gelar_depan'       => $this->request->getVar('gelar_depan'),
+            'nama_depan'        => $this->request->getVar('nama_depan'),
+            'nama_belakang'     => $this->request->getVar('nama_belakang'),
+            'gelar_belakang'    => $this->request->getVar('gelar_belakang'),
+            'jabatan'           => $this->request->getVar('jabatan'),
+            'status_pernikahan' => $this->request->getVar('status_pernikahan'),
+            'jumlah_anak'       => $this->request->getVar('jumlah_anak'),
         ];
 
-        // Menggunakan model untuk mengupdate data
-        if ($this->model->update($id, $data)) {
-            session()->setFlashdata('success', 'Data anggota berhasil diperbarui.');
-            return redirect()->to('/admin/anggota');
-        } else {
-            session()->setFlashdata('error', 'Gagal memperbarui data anggota.');
-            return redirect()->back();
-        }
+        $this->model->update($id, $data);
+        session()->setFlashdata('success', 'Data anggota berhasil diperbarui.');
+        return redirect()->to('/admin/anggota');
     }
+
     public function delete($id = null)
     {
-        // Menggunakan model untuk menghapus data
-        if ($this->model->delete($id)) {
-            session()->setFlashdata('success', 'Data anggota berhasil dihapus.');
-        } else {
-            session()->setFlashdata('error', 'Gagal menghapus data anggota.');
-        }
+        $this->model->delete($id);
+        session()->setFlashdata('success', 'Data anggota berhasil dihapus.');
         return redirect()->to('/admin/anggota');
     }
 }
