@@ -40,7 +40,7 @@ class PenggajianController extends ResourceController
     
     public function getKomponenByJabatan()
     {
-        $jabatan = $this->request->getVar('jabatan'); // Ambil jabatan dari data POST
+        $jabatan = $this->request->getVar('jabatan');
         $komponen = $this->komponenGajiModel
             ->where('jabatan', $jabatan)
             ->orWhere('jabatan', 'Semua')
@@ -95,6 +95,40 @@ class PenggajianController extends ResourceController
         }
 
         session()->setFlashdata('success', 'Data penggajian berhasil ditambahkan.');
+        return redirect()->to('/admin/penggajian');
+    }
+
+    // FUNGSI INI YANG DITAMBAHKAN KEMBALI
+    public function show($id = null)
+    {
+        $penggajian = $this->model
+            ->select('penggajian.*, anggota.nama_depan, anggota.nama_belakang, anggota.jabatan')
+            ->join('anggota', 'anggota.id_anggota = penggajian.id_anggota')
+            ->find($id);
+
+        if (!$penggajian) {
+            session()->setFlashdata('error', 'Data penggajian tidak ditemukan.');
+            return redirect()->to('/admin/penggajian');
+        }
+
+        $detail_komponen = $this->penggajianDetailModel->getDetailByIdPenggajian($id);
+
+        $data = [
+            'penggajian' => $penggajian,
+            'detail_komponen' => $detail_komponen,
+        ];
+
+        return view('admin/penggajian/show', $data);
+    }
+
+    // FUNGSI INI JUGA DITAMBAHKAN KEMBALI
+    public function delete($id = null)
+    {
+        if ($this->model->delete($id)) {
+            session()->setFlashdata('success', 'Data penggajian berhasil dihapus.');
+        } else {
+            session()->setFlashdata('error', 'Gagal menghapus data penggajian.');
+        }
         return redirect()->to('/admin/penggajian');
     }
 }

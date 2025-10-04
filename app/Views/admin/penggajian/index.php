@@ -12,6 +12,13 @@
     <a href="<?= site_url('admin/penggajian/new') ?>" class="btn btn-primary mb-3">
         <i class="fa fa-plus"></i> Tambah Data Penggajian
     </a>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('success') ?>
+        </div>
+    <?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
@@ -38,8 +45,13 @@
                         <td><?= esc($item['jabatan']) ?></td>
                         <td>Rp <?= number_format($item['take_home_pay'], 0, ',', '.') ?></td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                            <a href="<?= site_url('admin/penggajian/' . $item['id_penggajian']) ?>" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            
+                            <form action="<?= site_url('admin/penggajian/' . $item['id_penggajian']) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                <?= csrf_field() ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>
